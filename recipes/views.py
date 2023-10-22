@@ -1,18 +1,15 @@
-from urllib import response
 from django.shortcuts import render
-from django.http import HttpResponse
+from utils.recipes.factory import make_recipe
 
 
 def home(request):
-    """Return HOME"""
-    return render(request, "recipes/home.html", context={'nome':'Paulo'})
+    return render(request, 'recipes/pages/home.html', context={
+        'recipes': [make_recipe() for _ in range(10)],
+    })
 
 
-def contato(request):
-    """Return Contato"""
-    return HttpResponse("Contato!")
-
-
-def sobre(request):
-    """Return Sobre"""
-    return render(request, "recipes/home.html")
+def recipe(request, id):
+    return render(request, 'recipes/pages/recipe-view.html', context={
+        'recipe': make_recipe(),
+        'is_detail_page': True,
+    })
